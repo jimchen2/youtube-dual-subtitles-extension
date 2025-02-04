@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Multi Subtitles Youtube",
+    "version": "1.0",
+    "description": "Add multiple subtitles to YouTube videos",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "tabs",
+      "*://*.youtube.com/*"
+    ],
+    "browser_action": {
+      "default_title": "Multi Subtitles Youtube",
+      "browser_style": true,
+      "default_popup": "popup.html",
+      "default_icon": {
+        "128": "icon.png"
+      }
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://*.youtube.com/*"],
+        "js": ["inject.js"]
+      }
+    ],
+    "icons": {
+      "128": "icon.png"
+    }
+  }
+  
