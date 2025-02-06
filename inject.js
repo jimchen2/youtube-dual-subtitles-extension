@@ -1,11 +1,8 @@
 send_ytplayer();
-
-//console.log(window.tabid);
 if (!window.has_executed) {
   first_run();
 
   window.has_executed = true;
-  //console.log("first inject");
 }
 
 function first_run() {
@@ -30,22 +27,9 @@ function first_run() {
         sub_data = sub_data.replaceAll("align:start position:0%", "");
         subt.src = "data:text/vtt," + encodeURIComponent(sub_data, true);
       }
-      //subt.srclang = "en";
       video.appendChild(subt);
       subt.track.mode = "showing";
 
-      /*
-            var st = document.createElement("style");
-            st.textContent =`
-            ::cue { 
-                white-space: pre-wrap;
-                color: yellow; 
-                text-align: center; 
-            } \
-            
-            `;
-            document.head.appendChild(st);
-            */
     } else if (message.action == "remove_subs") {
       remove_subs();
     }
@@ -87,7 +71,6 @@ function get_ytplayer_to_body() {
         document.body.setAttribute("data-playerResponse", JSON.stringify( document.getElementsByTagName("ytd-app")[0].data.playerResponse ));
     `;
   script_tag = document.createElement("script");
-  //script_tag.id = 'tmpScript';
   script_tag.appendChild(document.createTextNode(scriptContent));
 
   (document.body || document.head || document.documentElement).appendChild(script_tag);
@@ -104,5 +87,3 @@ function remove_page_change() {
 
   script_tag.parentNode.removeChild(script_tag);
 }
-
-//------------------------------------------------

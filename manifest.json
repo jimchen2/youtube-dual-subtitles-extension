@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Multi Subtitles Youtube",
+    "name": "Learn Russian",
     "version": "1.0",
-    "description": "Add multiple subtitles to YouTube videos",
+    "description": "I want to learn Russian",
     "permissions": [
       "activeTab",
       "storage",
@@ -10,7 +10,7 @@
       "*://*.youtube.com/*"
     ],
     "browser_action": {
-      "default_title": "Multi Subtitles Youtube",
+      "default_title": "Learn Russian",
       "browser_style": true,
       "default_popup": "popup.html",
       "default_icon": {
