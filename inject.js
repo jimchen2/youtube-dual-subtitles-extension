@@ -1,23 +1,22 @@
-send_ytplayer();
+// Main script initialization
 if (!window.has_executed) {
-  first_run();
-
+  initializeMessageHandlers();
   window.has_executed = true;
 }
+sendYouTubePlayerData();
 
-function first_run() {
+// Core message handling and initialization
+function initializeMessageHandlers() {
   chrome.runtime.onMessage.addListener(async function (message, sender) {
-    //console.log(message, sender);
     if (message.action == "display_sub") {
       var url = message.url;
-
       var video = document.getElementsByTagName("video")[0];
       subt = document.createElement("track");
-
       subt.default = true;
 
-      if (!message.kill_left) subt.src = url;
-      else {
+      if (!message.kill_left) {
+        subt.src = url;
+      } else {
         var sub_data;
         await fetch(url)
           .then((response) => response.text())
@@ -29,61 +28,58 @@ function first_run() {
       }
       video.appendChild(subt);
       subt.track.mode = "showing";
-
     } else if (message.action == "remove_subs") {
-      remove_subs();
+      removeSubtitles();
     }
   });
 
   document.addEventListener("yt-navigate-finish", function () {
-    remove_subs();
+    removeSubtitles();
   });
 }
-function remove_subs() {
-  var video = document.getElementsByTagName("video")[0];
-  Array.from(video.getElementsByTagName("track")).forEach(function (ele) {
-    ele.track.mode = "hidden";
-    ele.parentNode.removeChild(ele);
-  });
-}
-async function send_ytplayer() {
-  //console.log(document.title);
+
+// YouTube player related functions
+async function sendYouTubePlayerData() {
   try {
-    get_ytplayer_to_body();
-
+    injectPlayerDataScript();
     const playerResponse_json = document.body.getAttribute("data-playerResponse");
-    //console.log( playerResponse_json );
-
     chrome.runtime.sendMessage({
-      //tabid: window.tabid,
       title: document.title,
       href: window.location.href,
       playerResponse_json: playerResponse_json,
     });
   } catch (err) {}
-
-  remove_page_change();
+  cleanupPlayerDataScript();
 }
 
-var script_tag;
-function get_ytplayer_to_body() {
-  var scriptContent = `
-        document.body.setAttribute("data-playerResponse", JSON.stringify( document.getElementsByTagName("ytd-app")[0].data.playerResponse ));
-    `;
-  script_tag = document.createElement("script");
-  script_tag.appendChild(document.createTextNode(scriptContent));
+var scriptElement;
 
-  (document.body || document.head || document.documentElement).appendChild(script_tag);
+function injectPlayerDataScript() {
+  var scriptContent = `
+      document.body.setAttribute("data-playerResponse", 
+          JSON.stringify(document.getElementsByTagName("ytd-app")[0].data.playerResponse)
+      );
+  `;
+  scriptElement = document.createElement("script");
+  scriptElement.appendChild(document.createTextNode(scriptContent));
+  (document.body || document.head || document.documentElement).appendChild(scriptElement);
 }
-function remove_page_change() {
+
+function cleanupPlayerDataScript() {
   var scriptContent = `
-        document.body.removeAttribute("data-playerResponse");
-    `;
+      document.body.removeAttribute("data-playerResponse");
+  `;
+  scriptElement = scriptElement || document.createElement("script");
+  scriptElement.innerHTML = "";
+  scriptElement.appendChild(document.createTextNode(scriptContent));
+  scriptElement.parentNode.removeChild(scriptElement);
+}
 
-  script_tag = script_tag || document.createElement("script");
-
-  script_tag.innerHTML = "";
-  script_tag.appendChild(document.createTextNode(scriptContent));
-
-  script_tag.parentNode.removeChild(script_tag);
+// Subtitle handling functions
+function removeSubtitles() {
+  var video = document.getElementsByTagName("video")[0];
+  Array.from(video.getElementsByTagName("track")).forEach(function (ele) {
+    ele.track.mode = "hidden";
+    ele.parentNode.removeChild(ele);
+  });
 }
