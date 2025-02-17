@@ -36,35 +36,35 @@ function parse_ytplayer() {
 
   document.getElementById("div_page_title").textContent = playerResponse.videoDetails.title;
 
-  // Handle subtitle language selector
   const selector_sub_lang = document.getElementById("selector-sub-lang");
   selector_sub_lang.innerHTML = "";
-  captionTracks.forEach((c, i) => {
+
+  // Loop through the original subtitle languages and find Russian(auto-generated) if applicable
+  let aRuFound = false;
+
+  for (let i = 0; i < captionTracks.length; i++) {
+    const c = captionTracks[i];
     const option = document.createElement("option");
     option.setAttribute("value", i);
     option.textContent = c.name.simpleText;
     selector_sub_lang.appendChild(option);
 
-    chrome.storage.local.get("orig_sub_lang", (result) => {
-      if (result.orig_sub_lang === c.vssId) {
-        selector_sub_lang.value = i;
-      }
-    });
-  });
+    if (c.vssId === "a.ru") {
+      selector_sub_lang.value = i;
+      aRuFound = true;
+      break;
+    } else if (c.vssId === "ru" && !aRuFound) {
+      selector_sub_lang.value = i;
+    }
+  }
 
-  // Handle translation language selector
+  // Add the other original languages as well in the box
   const selector_trans_lang = document.getElementById("selector-trans-lang");
   translationLanguages.forEach((c, i) => {
     const option = document.createElement("option");
     option.setAttribute("value", i);
     option.textContent = c.languageName.simpleText;
     selector_trans_lang.appendChild(option);
-
-    chrome.storage.local.get("tran_sub_lang", (result) => {
-      if (result.tran_sub_lang === c.languageCode) {
-        selector_trans_lang.value = i;
-      }
-    });
   });
 }
 
@@ -138,18 +138,6 @@ onrd.push(() => {
       url: get_subtitle_url(),
       kill_left: true,
     });
-
-    const selector_sub_lang = document.getElementById("selector-sub-lang");
-    const cbox_trans = document.getElementById("cbox_trans");
-    const selector_trans_lang = document.getElementById("selector-trans-lang");
-
-    const orig_vssid = captionTracks[selector_sub_lang.value].vssId;
-    chrome.storage.local.set({ orig_sub_lang: orig_vssid });
-
-    if (cbox_trans.checked) {
-      const tran_lang = translationLanguages[selector_trans_lang.value].languageCode;
-      chrome.storage.local.set({ tran_sub_lang: tran_lang });
-    }
   };
 });
 

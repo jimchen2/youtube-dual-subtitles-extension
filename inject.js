@@ -14,18 +14,15 @@ function initializeMessageHandlers() {
       subt = document.createElement("track");
       subt.default = true;
 
-      if (!message.kill_left) {
-        subt.src = url;
-      } else {
-        var sub_data;
-        await fetch(url)
-          .then((response) => response.text())
-          .then((textString) => {
-            sub_data = textString;
-          });
-        sub_data = sub_data.replaceAll("align:start position:0%", "");
-        subt.src = "data:text/vtt," + encodeURIComponent(sub_data, true);
-      }
+      var sub_data;
+      await fetch(url)
+        .then((response) => response.text())
+        .then((textString) => {
+          sub_data = textString;
+        });
+      sub_data = sub_data.replaceAll("align:start position:0%", "");
+      subt.src = "data:text/vtt," + encodeURIComponent(sub_data, true);
+
       video.appendChild(subt);
       subt.track.mode = "showing";
     } else if (message.action == "remove_subs") {
