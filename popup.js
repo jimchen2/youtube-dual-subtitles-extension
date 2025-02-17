@@ -16,7 +16,7 @@ function get_subtitle_url() {
     const trans_to_lang_code = translationLanguages[selector_trans_lang.value].languageCode;
     url += `&tlang=${trans_to_lang_code}`;
   }
-  
+
   return url;
 }
 
@@ -34,7 +34,7 @@ function parse_ytplayer() {
   const selector_sub_lang = document.getElementById("selector-sub-lang");
   selector_sub_lang.innerHTML = "";
 
-  // Loop through the original subtitle languages and find Russian(auto-generated) if applicable
+  // Loop through the original subtitle languages and find only Russian subtitle and add to the box
   let aRuFound = false;
 
   for (let i = 0; i < captionTracks.length; i++) {
@@ -42,25 +42,30 @@ function parse_ytplayer() {
     const option = document.createElement("option");
     option.setAttribute("value", i);
     option.textContent = c.name.simpleText;
-    selector_sub_lang.appendChild(option);
 
     if (c.vssId === "a.ru") {
       selector_sub_lang.value = i;
       aRuFound = true;
+      selector_sub_lang.appendChild(option);
+
       break;
     } else if (c.vssId === "ru" && !aRuFound) {
       selector_sub_lang.value = i;
+      selector_sub_lang.appendChild(option);
     }
   }
 
-  // Add the other original languages as well in the box
+  // Add the translated languages (English) in the box
   const selector_trans_lang = document.getElementById("selector-trans-lang");
-  translationLanguages.forEach((c, i) => {
+
+  const englishOnly = translationLanguages.filter((lang) => lang.languageCode === "en");
+
+  for (let i = 0; i < englishOnly.length; i++) {
     const option = document.createElement("option");
     option.setAttribute("value", i);
-    option.textContent = c.languageName.simpleText;
+    option.textContent = englishOnly[i].languageName.simpleText;
     selector_trans_lang.appendChild(option);
-  });
+  }
 }
 
 // Event Listeners
