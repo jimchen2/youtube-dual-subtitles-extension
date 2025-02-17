@@ -4,6 +4,8 @@ if (!window.has_executed) {
   initializeAndAddSubtitles();
 }
 
+var executed = 0;
+
 async function initializeAndAddSubtitles() {
   // Wait for video to be ready
   await waitForVideo();
@@ -31,6 +33,12 @@ async function initializeAndAddSubtitles() {
     }
   }
 
+  if (executed) {
+    return;
+  }
+  
+  executed = 1;
+
   if (russianTrack) {
     // Find English translation option
     let englishLangCode = null;
@@ -41,13 +49,13 @@ async function initializeAndAddSubtitles() {
       }
     }
 
-    // Add Russian subtitles
-    await addSubtitleTrack(russianTrack.baseUrl + "&fmt=vtt", "ru");
-
-    // Add English translation if available
+    // Add English translation first if available
     if (englishLangCode) {
       await addSubtitleTrack(`${russianTrack.baseUrl}&fmt=vtt&tlang=${englishLangCode}`, "en");
     }
+
+    // Then add Russian subtitles
+    await addSubtitleTrack(russianTrack.baseUrl + "&fmt=vtt", "ru");
   }
 }
 
