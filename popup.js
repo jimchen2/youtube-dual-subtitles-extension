@@ -1,16 +1,10 @@
-// Initialize global variables
 const onrd = [];
 let cur_tab;
 let playerResponse;
 let captionTracks;
 let translationLanguages;
 
-// Helper functions
-function show_refresh() {
-  document.getElementById("div_refresh_tip").style.display = "";
-  document.getElementById("div_page_title").style.color = "orange";
-}
-
+// Function to construct subtitle url
 function get_subtitle_url() {
   const selector_sub_lang = document.getElementById("selector-sub-lang");
   const cbox_trans = document.getElementById("cbox_trans");
@@ -22,6 +16,7 @@ function get_subtitle_url() {
     const trans_to_lang_code = translationLanguages[selector_trans_lang.value].languageCode;
     url += `&tlang=${trans_to_lang_code}`;
   }
+  
   return url;
 }
 
@@ -103,44 +98,25 @@ onrd.push(() => {
       );
     }
   );
-
-  // Message listener
   chrome.runtime.onMessage.addListener((message, sender) => {
     if (sender.tab.id === cur_tab.id) {
-      try {
-        playerResponse = JSON.parse(message["playerResponse_json"]);
-
-        if (!playerResponse) {
-          throw new Error("No player response");
-        }
-
-        document.getElementById("div_connecting_tip").style.display = "none";
-
-        const ytplayer_videoid = playerResponse.videoDetails?.videoId;
-        if (!ytplayer_videoid || !cur_tab.url.includes(ytplayer_videoid)) {
-          throw new Error("Invalid video ID");
-        }
-
-        parse_ytplayer();
-      } catch (err) {
-        console.error("Error processing player response:", err);
-        show_refresh();
-      }
+      playerResponse = JSON.parse(message["playerResponse_json"]);
+      parse_ytplayer();
     }
   });
 });
 
-// Button click handlers
+// Sending action to add subtitle
 onrd.push(() => {
   document.getElementById("btn_disp_sub").onclick = () => {
     chrome.tabs.sendMessage(cur_tab.id, {
       action: "display_sub",
       url: get_subtitle_url(),
-      kill_left: true,
     });
   };
 });
 
+// Sending action to remove subtitle
 onrd.push(() => {
   document.getElementById("btn_rm_sub").onclick = () => {
     chrome.tabs.sendMessage(cur_tab.id, {
@@ -149,13 +125,7 @@ onrd.push(() => {
   };
 });
 
-onrd.push(() => {
-  document.getElementById("btn_url").onclick = () => {
-    const url = get_subtitle_url();
-    navigator.clipboard.writeText(url);
-  };
-});
-
+// In the popup this functions enables selection of different translations of subtitles
 onrd.push(() => {
   const cbox_trans = document.getElementById("cbox_trans");
   const selector_trans_lang = document.getElementById("selector-trans-lang");
