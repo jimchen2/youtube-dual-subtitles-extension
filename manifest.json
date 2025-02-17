@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Learn Russian",
+  "name": "Learn Languages",
   "version": "1.0",
-  "description": "I want to learn Russian",
+  "description": "I want to learn languages",
   "permissions": ["activeTab", "storage", "tabs", "*://*.youtube.com/*"],
   "browser_action": {
-    "default_title": "Learn Russian",
+    "default_title": "Learn Languages",
     "browser_style": true,
     "default_icon": {
       "128": "icon.png"
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js": ["shit.js"],
+      "js": ["script.js"],
       "run_at": "document_start"
     }
   ],
