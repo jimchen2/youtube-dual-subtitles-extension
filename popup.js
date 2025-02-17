@@ -57,14 +57,13 @@ function parse_ytplayer() {
 
   // Add the translated languages (English) in the box
   const selector_trans_lang = document.getElementById("selector-trans-lang");
-
-  const englishOnly = translationLanguages.filter((lang) => lang.languageCode === "en");
-
-  for (let i = 0; i < englishOnly.length; i++) {
-    const option = document.createElement("option");
-    option.setAttribute("value", i);
-    option.textContent = englishOnly[i].languageName.simpleText;
-    selector_trans_lang.appendChild(option);
+  for (let i = 0; i < translationLanguages.length; i++) {
+    if (translationLanguages[i].languageName.simpleText == "English") {
+      const option = document.createElement("option");
+      option.setAttribute("value", i);
+      option.textContent = translationLanguages[i].languageName.simpleText;
+      selector_trans_lang.appendChild(option);
+    }
   }
 }
 
