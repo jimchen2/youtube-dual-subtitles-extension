@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dual Subtitles Video Player</title>
+    <style>
+      .video-container {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      video {
+        width: 100%;
+        height: auto;
+      }
+      ::cue {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <video controls width="640" height="360" id="video">
+        <source src="https://cdn.jimchen.me/4b1c9434bb0262c6e8dc480478eaf915/Sigma-Boy.webm" type="video/webm" />
+        <track label="Russian" kind="subtitles" srclang="ru" src="https://cdn.jimchen.me/d074ecc1601e593f5c695733ba7fc7c3/ru.vtt"/>
+        <track label="English" kind="subtitles" srclang="en" src="https://cdn.jimchen.me/d074ecc1601e593f5c695733ba7fc7c3/en.vtt"/>
+      </video>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('video');
+        // Wait for the tracks to load
+        video.addEventListener('loadedmetadata', function() {
+          // Turn off all text tracks
+          for(let i = 0; i < video.textTracks.length; i++) {
+            video.textTracks[i].mode = 'disabled';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
