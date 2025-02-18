@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Learn Languages",
+  "name": "YouTube Dual Subtitles in French, German, Russian, Ukrainian",
   "version": "1.0",
-  "description": "I want to learn languages",
-  "permissions": ["activeTab", "*://*.youtube.com/watch*", "*://*.cdn.jimchen.me/*"],
+  "description": "YouTube Dual Subtitles in French, German, Russian, Ukrainian automatically loaded with English",
+  "permissions": ["activeTab", "*://*.youtube.com/watch*"],
   "browser_action": {
     "default_title": "Learn Languages",
     "browser_style": true,
@@ -13,7 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/watch*", "*://*.cdn.jimchen.me/*.html"],
+      "matches": ["*://*.youtube.com/watch*"],
       "js": ["script.js"],
       "run_at": "document_start"
     }
