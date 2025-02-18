@@ -1,10 +1,10 @@
 ## Display dual subtitles on YouTube with highlight
 
-[Install in greasyfork (native language: English)](https://greasyfork.org/en/scripts/527345-youtube-dual-subtitles-for-french-german-russian-ukrainian)
+[Userscript (native language: English)](https://greasyfork.org/en/scripts/527345-youtube-dual-subtitles-for-french-german-russian-ukrainian)
 
 ![image](https://github.com/user-attachments/assets/859a8f94-ea0e-481b-bc92-08fabc7b94a8)
 
-[Install in greasyfork (native language: Chinese)](https://greasyfork.org/en/scripts/527349-youtube-dual-subtitles-target-language-chinese)
+[Userscript (native language: Chinese)](https://greasyfork.org/en/scripts/527349-youtube-dual-subtitles-target-language-chinese)
 
 ![image](https://github.com/user-attachments/assets/5804be3d-2ef2-4a68-812c-f430c25ca71a)
 
