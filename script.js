@@ -1,28 +1,53 @@
-if (!window.has_executed) {
-  window.has_executed = true;
-  initializeAndAddSubtitles();
-}
-
 let executed = 0;
 
+console.log("Dual Sub Script Start");
+
+document.addEventListener("yt-navigate-finish", () => {
+  const video = document.querySelector("video");
+  if (video) {
+    Array.from(video.getElementsByTagName("track")).forEach((track) => {
+      track.track.mode = "hidden";
+      track.remove();
+    });
+  }
+  initializeAndAddSubtitles();
+});
+
 async function initializeAndAddSubtitles() {
-  const video = await new Promise((resolve) => {
-    const check = () => {
-      const v = document.querySelector("video");
-      v ? resolve(v) : setTimeout(check, 500);
-    };
-    check();
+  // Inject the script to get data
+  const playerData = await new Promise((resolve) => {
+    console.log("1111111");
+    console.log("1111111");
+    console.log("1111111");
+    console.log("1111111");
+
+    console.log(window.location);
+    console.log("222222");
+    console.log("222222");
+
+    // Desktop Site
+    if (window.location.href.startsWith("https://www.youtube.com")) {
+      console.log("Desktop");
+      const script = document.createElement("script");
+      script.textContent = `document.body.setAttribute('data-player-response', 
+          JSON.stringify(document.getElementsByTagName('ytd-app')[0].data.playerResponse))`;
+      document.body.appendChild(script);
+      script.remove();
+      const response = document.body.getAttribute("data-player-response");
+      document.body.removeAttribute("data-player-response");
+      resolve(JSON.parse(response));
+    } else {
+      // Mobile Site
+      resolve(window.ytInitialPlayerResponse);
+    }
   });
 
-  const playerData = await new Promise((resolve) => {
-    const script = document.createElement("script");
-    script.textContent = `document.body.setAttribute('data-player-response', 
-      JSON.stringify(document.getElementsByTagName('ytd-app')[0].data.playerResponse))`;
-    document.body.appendChild(script);
-    script.remove();
-    resolve(JSON.parse(document.body.getAttribute("data-player-response")));
-    document.body.removeAttribute("data-player-response");
-  });
+  console.log("poaisjdpfoisajdpofisajd");
+  console.log("poaisjdpfoisajdpofisajd");
+  console.log("poaisjdpfoisajdpofisajd");
+  console.log("poaisjdpfoisajdpofisajd");
+  console.log("poaisjdpfoisajdpofisajd");
+  console.log(playerData);
 
   if (!playerData?.captions || executed) return;
   executed = 1;
@@ -66,14 +91,3 @@ async function addSubtitle(url, lang) {
   video.appendChild(track);
   track.track.mode = "showing";
 }
-
-document.addEventListener("yt-navigate-finish", () => {
-  const video = document.querySelector("video");
-  if (video) {
-    Array.from(video.getElementsByTagName("track")).forEach((track) => {
-      track.track.mode = "hidden";
-      track.remove();
-    });
-  }
-  initializeAndAddSubtitles();
-});
