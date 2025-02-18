@@ -9,8 +9,8 @@ async function initializeAndAddSubtitles() {
   // Inject the script to get data
   const captionData = await new Promise((resolve) => {
     const script = document.createElement("script");
-    script.textContent = `document.body.setAttribute('youtube-extension-subtitle-data-response', 
-    JSON.stringify(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer))`;
+    script.textContent = `document.body.setAttribute('data-player-response', 
+    JSON.stringify(document.getElementsByTagName('ytd-app')[0].data.playerResponse.captions.playerCaptionsTracklistRenderer))`;
     document.body.appendChild(script);
     const response = document.body.getAttribute("youtube-extension-subtitle-data-response");
     resolve(JSON.parse(response));

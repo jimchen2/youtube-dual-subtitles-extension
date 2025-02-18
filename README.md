@@ -2,6 +2,9 @@
 
 ![image](https://github.com/user-attachments/assets/859a8f94-ea0e-481b-bc92-08fabc7b94a8)
 
+If you navigating between videos without a full page reload `window.ytInitialPlayerResponse` is going to stay the same.
+
+
 ### Non-YouTube Method:
 
 1. Download from VK Video/Rutube/1tv/Dzen/Telegram
