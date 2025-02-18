@@ -4,6 +4,7 @@
 
 If you navigating between videos without a full page reload `window.ytInitialPlayerResponse` is going to stay the same.
 
+Use `document.getElementsByTagName('ytd-app')[0].data.playerResponse.captions.playerCaptionsTracklistRenderer` in the browser console to find the captions.
 
 ### Non-YouTube Method:
 

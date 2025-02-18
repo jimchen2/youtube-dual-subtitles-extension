@@ -42,7 +42,7 @@
   }
 
   function getCaptionData() {
-    return document.getElementsByTagName("ytd-app")[0]?.data?.playerResponse?.captions?.playerCaptionsTracklistRenderer;
+    return document.getElementsByTagName("ytd-app")[0].data.playerResponse.captions.playerCaptionsTracklistRenderer;
   }
 
   function findLearningTrack(captionTracks) {
@@ -102,9 +102,10 @@
   setTimeout(handleVideoNavigation, 1000);
 
   function removeSubs() {
-    const video = document.querySelector("video");
-    if (video) {
-      Array.from(video.getElementsByTagName("track")).forEach((track) => track.remove());
-    }
+    var video = document.getElementsByTagName("video")[0];
+    Array.from(video.getElementsByTagName("track")).forEach(function (ele) {
+      ele.track.mode = "hidden";
+      ele.parentNode.removeChild(ele);
+    });
   }
 })();
