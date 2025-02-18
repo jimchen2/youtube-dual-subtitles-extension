@@ -14,11 +14,6 @@ async function initializeAndAddSubtitles() {
     check();
   });
 
-  console.log(video);
-  console.log(video);
-  console.log(video);
-  console.log(video);
-
   const playerData = await new Promise((resolve) => {
     const script = document.createElement("script");
     script.textContent = `document.body.setAttribute('data-player-response', 
