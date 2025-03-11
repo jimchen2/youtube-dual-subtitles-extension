@@ -22,18 +22,16 @@
   });
   observer.observe(document.body, { childList: true, subtree: true });
   handleVideoNavigation();
-
   async function handleVideoNavigation() {
     if (processingSubtitles == true) return;
     processingSubtitles = true;
-    removeSubs();
     let subtitleURL = await extractSubtitleUrl();
     if (subtitleURL == null) return;
+    // removeSubs();
+    // await addOneSubtitle(subtitleURL + "&tlang=en");
     await addOneSubtitle(subtitleURL);
-    await addOneSubtitle(subtitleURL + "&tlang=en");
     processingSubtitles = false;
   }
-
   async function extractSubtitleUrl() {
     function extractYouTubeVideoID() {
       const url = window.location.href;
