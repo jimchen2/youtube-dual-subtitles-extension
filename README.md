@@ -8,9 +8,9 @@ A script to display dual subtitles on YouTube with sliding effect, utilizing VTT
 
 ![image](https://github.com/user-attachments/assets/a836ae2e-d4ae-4b5d-91d7-20a3e24aaedc)
 
-![image](https://github.com/user-attachments/assets/4af7e298-769b-4def-bdb8-5e2db77398c2)
+![image](https://github.com/user-attachments/assets/b9a299ba-e052-41e6-b9ef-e4fff9144784)
 
-![image](https://github.com/user-attachments/assets/e8af7c97-f956-4ec0-b933-7c9f876d40a6)
+![image](https://github.com/user-attachments/assets/c4fc95ec-9220-4229-a352-0e71cbeb2cff)
 
 
 
