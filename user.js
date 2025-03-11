@@ -27,8 +27,8 @@
     processingSubtitles = true;
     let subtitleURL = await extractSubtitleUrl();
     if (subtitleURL == null) return;
-    // removeSubs();
-    // await addOneSubtitle(subtitleURL + "&tlang=en");
+    removeSubs();
+    await addOneSubtitle(subtitleURL + "&tlang=en");
     await addOneSubtitle(subtitleURL);
     processingSubtitles = false;
   }
