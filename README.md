@@ -6,6 +6,14 @@ A script to display dual subtitles on YouTube with sliding effect, utilizing VTT
 
 ![image](https://github.com/user-attachments/assets/859a8f94-ea0e-481b-bc92-08fabc7b94a8)
 
+![image](https://github.com/user-attachments/assets/a836ae2e-d4ae-4b5d-91d7-20a3e24aaedc)
+
+![image](https://github.com/user-attachments/assets/4af7e298-769b-4def-bdb8-5e2db77398c2)
+
+![image](https://github.com/user-attachments/assets/e8af7c97-f956-4ec0-b933-7c9f876d40a6)
+
+
+
 Use `document.querySelector("#movie_player").getPlayerResponse()?.captions?.playerCaptionsTracklistRenderer?.captionTracks`
 
 ### Example YouTube Subtitles URLs: (expired)
