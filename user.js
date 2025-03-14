@@ -23,14 +23,16 @@
   observer.observe(document.body, { childList: true, subtree: true });
   handleVideoNavigation();
   async function handleVideoNavigation() {
+    removeSubs();
+
     if (processingSubtitles == true) return;
     processingSubtitles = true;
     let subtitleURL = await extractSubtitleUrl();
+    processingSubtitles = false;
+
     if (subtitleURL == null) return;
-    removeSubs();
     await addOneSubtitle(subtitleURL + "&tlang=en");
     await addOneSubtitle(subtitleURL);
-    processingSubtitles = false;
   }
   async function extractSubtitleUrl() {
     function extractYouTubeVideoID() {
@@ -55,7 +57,6 @@
     }
     let videoID = extractYouTubeVideoID();
     if (videoID == null) return;
-
     const playerData = await new Promise((resolve) => {
       const checkForPlayer = () => {
         let ytAppData = document.querySelector("#movie_player");
