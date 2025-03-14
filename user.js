@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Dual Subtitles for French, German, Russian, Ukrainian
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      2.0
 // @license      Unlicense
 // @description  Add dual subtitles to YouTube videos
 // @author       Jim Chen
